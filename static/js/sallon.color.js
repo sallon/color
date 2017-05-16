@@ -181,9 +181,13 @@
     $.fn.sallonColor = function(){
         var _default = $(this).find("input").val() != undefined?$(this).find("input").val():"#f90";
         $("body").css("position","relative");
+        //将颜色选择框初始化到body里面并隐藏
         $("body").append(html);
+        //初始化颜色选择框，并且绑定点击事件
         colorInput.initColor($(this),_default);
+        //初始化颜色选择框上面的color picker
         colorPicker();
+
         // colorPicker(defaultValue);
         // setColorValue();
         // var co = $("#colorPicker").minicolors("value");
@@ -193,3 +197,6 @@
     }
 
 })(jQuery);
+function a_choose(){
+
+}
