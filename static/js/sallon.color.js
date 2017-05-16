@@ -85,7 +85,7 @@
             '<a style="background-color:#7030a0;border-width:1px;" c="7030a0">&nbsp;</a>'+
             '</div>'+
             '</div>';
-    var colorPicker = function(defaultValue){
+    var colorPicker = function(_this,_default){
         $.minicolors = {
             defaults: {
                 animationSpeed: 50,
@@ -109,58 +109,49 @@
             }
         };
         $("#colorPicker").minicolors({
-            defaultValue:defaultValue,
+            defaultValue:_default,
             change: function(value, opacity) {
-                setTimeout(function(){
-                    $("#sallon_color").hide();
-                    $("#sallon_color").find(".sallon_bgs a").each(function(){
-                        $(this).off("click");
-                    });
-                },300);
+                //TODO 输出选中颜色
+                a_choose(_this,value)
             }
         });
-    }
-    function setColorValue(){
-        $("#sallon_color").find(".sallon_bgs a").each(function(){
-            $(this).on("click",function(){
-                var c = $(this).attr("c");
-                $("#colorPicker").minicolors("value","#"+c);
-            })
-        })
-    }
-    var option = {
-        "z-index":999
     }
     var colorInput = {
         // id:parseInt(Math.random()*1000),
         html : "<div style='display:inline-block;width:24px;height:24px;vertical-align: middle;border-radius:" +
         " 5px;border: 1px solid #eee;'></div>",
-        returnId : function(){
-            return this.id;
-        },
-        getColor:function(_input){
-            return $(_input).val();
-        },
-        setColor:function(colorCode){
-            console.log(this.id);
-            $("#"+this.id).css({
-                "background-color":"#"+colorCode
-            })
-        },
         initColor : function(_input,_color){
             $(_input).wrap(this.html).css("display","none");
             $(_input).parent().css({
-                "background-color":"#"+_color
+                "background-color":_color
             })
             // this.setColor(_color);
             $(_input).val(_color);
             $(_input).parent().on("click",function(){
                 showSallonColorBox(this);
             });
+            var _this = $(_input).parent();
+            /*绑定a的输出值*/
+            this._bindA(_this);
+        },
+        _bindA:function(_this){
+            $("#sallon_color").find(".sallon_bgs a").each(function(){
+                $(this).on("click",function(){
+                    var c = $(this).attr("c");
+                    $("#colorPicker").minicolors("value","#"+c);
+                    a_choose(_this,"#"+c);
+                })
+            })
         }
+
     }
     var showSallonColorBox = function(_this){
         // console.log($(".sallon_color").is(":hidden"));
+        //初始化颜色选择框上面的color picker
+        var _default = $(_this).find("input").val() != undefined?$(_this).find("input").val():"#f90";
+        // console.log($(_this).find("input").val());
+        colorPicker(_this,_default);
+        //显示在对应的地方
         var t = $(_this).offset().top+17;//top
         var l = $(_this).offset().left-8;//left
         $(".sallon_color").css({
@@ -172,31 +163,37 @@
                 if($(target).parents(".sallon_color").length == 0){
                     $(".sallon_color").hide(function(){
                         $(document).off("click");
+                        destroyAll();
                     });
                 }
             })
         });
     }
-
-    $.fn.sallonColor = function(){
-        var _default = $(this).find("input").val() != undefined?$(this).find("input").val():"#f90";
+    function _initSallonDiv(_this){
         $("body").css("position","relative");
         //将颜色选择框初始化到body里面并隐藏
         $("body").append(html);
+        var _default = $(_this).find("input").val() != undefined?$(_this).find("input").val():"#f90";
         //初始化颜色选择框，并且绑定点击事件
-        colorInput.initColor($(this),_default);
-        //初始化颜色选择框上面的color picker
-        colorPicker();
+        colorInput.initColor($(_this),_default);
+    }
+    /*输出颜色*/
+    function a_choose(_this,_color){
+        // console.log(_this)
+        $(_this).css({
+            "background-color":_color
+        })
+        $(_this).find(">input").val(_color);
+    }
+    $.fn.sallonColor = function(){
+        //页面加载完成，现初始化input框
+        _initSallonDiv($(this));
+    }
 
-        // colorPicker(defaultValue);
-        // setColorValue();
-        // var co = $("#colorPicker").minicolors("value");
-        // // $("#colorPicker").minicolors("destroy");
-        // console.log(co);
-        // $(this).val(co);
+    function destroyAll(){
+        $("#colorPicker").minicolors("destroy");
+        $("#sallon_color").find(".sallon_bgs a").off("click");
     }
 
 })(jQuery);
-function a_choose(){
 
-}
