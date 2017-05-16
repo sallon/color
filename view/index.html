@@ -3,14 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>颜色插件</title>
+    <link rel="stylesheet" href="../static/colorpicker/jquery.minicolors.css">
     <link rel="stylesheet" href="../static/css/color.css">
 </head>
 <body>
 
-div.
+<div class="chooseBtn">
+    <span>选择颜色</span><input type="text" id="sallonColorInput">
+</div>
 
 <script src="../static/js/jquery.min.js"></script>
+<script src="../static/colorpicker/jquery.minicolors.min.js"></script>
 <script src="../static/js/sallon.color.js"></script>
+<script type="text/javascript">
 
+    $(function(){
+        $("#sallonColorInput").sallonColor();
+    })
+</script>
 </body>
 </html>

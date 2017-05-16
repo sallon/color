@@ -8,7 +8,7 @@ var connect = require("gulp-connect");
 
 gulp.task('sass', function(){
     return gulp.src('./static/sass/*.scss')
-        .pipe(sass({outputStyle: 'compact'}).on('error', sass.logError))
+        .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
         .pipe(autoprefixer({
             browsers: ['last 2 versions','last 2 Explorer versions','last 3 Safari versions','Firefox >= 20','> 5%'],
             cascade: true
