@@ -9,7 +9,16 @@
 <body>
 
 <div class="chooseBtn">
-    <span>选择颜色</span><input type="text" id="sallonColorInput">
+    <span>选择颜色</span><input type="text" class="sallonColorInput">
+</div>
+<div class="chooseBtn">
+    <span>选择颜色</span><input type="text" class="sallonColorInput">
+</div>
+<div class="chooseBtn">
+    <span>选择颜色</span><input type="text" class="sallonColorInput">
+</div>
+<div class="chooseBtn">
+    <span>选择颜色</span><input type="text" class="sallonColorInput">
 </div>
 
 <script src="../static/js/jquery.min.js"></script>
@@ -18,7 +27,9 @@
 <script type="text/javascript">
 
     $(function(){
-        $("#sallonColorInput").sallonColor();
+        $(".sallonColorInput").each(function(){
+            $(this).sallonColor();
+        });
     })
 </script>
 </body>
